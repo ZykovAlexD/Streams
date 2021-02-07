@@ -13,7 +13,7 @@ public class Main {
         List<String> names = Arrays.asList("Jack", "Connor", "Harry", "George", "Samuel", "John");
         List<String> families = Arrays.asList("Evans", "Young", "Harris", "Wilson", "Davies", "Adamson", "Brown");
         Collection<Person> persons = new ArrayList<>();
-        for (int i = 0; i < 10_000_000; i++) {
+        for (int i = 0; i < 100; i++) {
             persons.add(new Person(
                     names.get(new Random().nextInt(names.size())),
                     families.get(new Random().nextInt(families.size())),
@@ -35,10 +35,10 @@ public class Main {
         System.out.println(fam);
 
         List<String> workers = persons.stream()
-                .filter(c -> c.getAge() >= 18)
-                .filter(c -> c.getAge() <= 60)
-                .filter(c -> c.getEducation() == Education.HIGHER)
-                .sorted(Comparator.comparing(Person::getEducation))
+                .filter(c -> c.getAge() >= 18 && c.getAge() <= 65 && c.getEducation() == Education.HIGHER && c.getSex()
+                        == Sex.MAN || c.getAge() >= 18 && c.getAge() <= 60 && c.getEducation()
+                        == Education.HIGHER && c.getSex() == Sex.WOMEN)
+                .sorted(Comparator.comparing(Person::getFamily))
                 .map(Person::getFamily)
                 .collect(Collectors.toList());
         System.out.println(workers);
